@@ -97,14 +97,14 @@ namespace GUtils.Di.Contexts
             );
         }
 
-        public IDiContainer? GetContainerUnsafe()
+        public IDiContainer GetContainerUnsafe()
         {
             if (!_hasValidContainer)
             {
                 throw new AccessViolationException("Tried to get container but it was not created or already disposed");
             }
 
-            return _container;
+            return _container!;
         }
     }
 }

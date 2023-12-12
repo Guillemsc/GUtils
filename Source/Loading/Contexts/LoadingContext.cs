@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using GUtils.Delegates.Animation;
-using GUtils.Sequencing.Instructions;
-using GUtils.Sequencing.Sequencer;
 using GUtils.Extensions;
+using GUtils.Tasks.Sequencing.Instructions;
+using GUtils.Tasks.Sequencing.Sequencer;
 
 namespace GUtils.Loading.Contexts
 {
     /// <inheritdoc />
     public sealed class LoadingContext : ILoadingContext
     {
-        readonly ISequencer _sequencer;
+        readonly ITaskSequencer _taskSequencer;
 
         readonly IReadOnlyList<TaskAnimationEvent> _beforeLoad;
         readonly IReadOnlyList<TaskAnimationEvent> _afterLoad;
@@ -26,12 +26,12 @@ namespace GUtils.Loading.Contexts
         public bool IsLoading { get; private set; }
 
         public LoadingContext(
-            ISequencer sequencer,
+            ITaskSequencer taskSequencer,
             IReadOnlyList<TaskAnimationEvent> beforeLoad,
             IReadOnlyList<TaskAnimationEvent> afterLoad
             )
         {
-            _sequencer = sequencer;
+            _taskSequencer = taskSequencer;
             _beforeLoad = beforeLoad;
             _afterLoad = afterLoad;
         }
@@ -82,41 +82,38 @@ namespace GUtils.Loading.Contexts
 
         public async Task Execute(CancellationToken cancellationToken)
         {
-            await _sequencer.WaitCompletition();
+            await _taskSequencer.AwaitCompletition(cancellationToken);
+            
+            if(cancellationToken.IsCancellationRequested) return;
 
             IsLoading = true;
 
             foreach (TaskAnimationEvent before in _beforeLoad)
             {
-                _sequencer.Play(ct => before.Invoke(_runBeforeLoadActionsInstantly, ct));
+                _taskSequencer.Play(ct => before.Invoke(_runBeforeLoadActionsInstantly, ct));
             }
 
             while (_enqueuedInstructions.Count > 0)
             {
-                _sequencer.Play(_enqueuedInstructions.Dequeue());
+                _taskSequencer.Play(_enqueuedInstructions.Dequeue());
             }
 
             if (!_dontRunAfterLoadActions)
             {
                 foreach (TaskAnimationEvent after in _afterLoad)
                 {
-                    _sequencer.Play(ct => after.Invoke(false, ct));
+                    _taskSequencer.Play(ct => after.Invoke(false, ct));
                 }
             }
 
             while (_afterLoadEnqueuedInstructions.Count > 0)
             {
-                _sequencer.Play(_afterLoadEnqueuedInstructions.Dequeue());
+                _taskSequencer.Play(_afterLoadEnqueuedInstructions.Dequeue());
             }
 
-            await _sequencer.WaitCompletition();
+            await _taskSequencer.AwaitCompletition(cancellationToken);
 
             IsLoading = false;
-        }
-
-        public void Execute()
-        {
-            ExecuteAsync();
         }
 
         public void ExecuteAsync()

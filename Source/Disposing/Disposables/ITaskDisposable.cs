@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System;
+using System.Threading;
 
 namespace GUtils.Disposing.Disposables
 {
@@ -8,7 +9,7 @@ namespace GUtils.Disposing.Disposables
     /// </summary>
     public interface ITaskDisposable
     {
-        Task Dispose();
+        Task Dispose(CancellationToken cancellationToken);
     }
 
     /// <summary>

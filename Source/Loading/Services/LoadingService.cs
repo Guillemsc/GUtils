@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using GUtils.Delegates.Animation;
 using GUtils.Loading.Contexts;
-using GUtils.Sequencing.Sequencer;
+using GUtils.Tasks.Sequencing.Sequencer;
 
 namespace GUtils.Loading.Services
 {
     /// <inheritdoc />
     public class LoadingService : ILoadingService
     {
-        readonly ISequencer _sequencer = new Sequencer();
+        readonly ITaskSequencer _taskSequencer = new TaskSequencer();
 
         readonly List<TaskAnimationEvent> _beforeLoad = new();
         readonly List<TaskAnimationEvent> _afterLoad = new();
 
-        public bool IsLoading => _sequencer.IsRunning;
+        public bool IsLoading => _taskSequencer.IsRunning;
 
         public void AddAfterLoading(TaskAnimationEvent func)
         {
@@ -28,7 +28,7 @@ namespace GUtils.Loading.Services
         public ILoadingContext New()
         {
             return new LoadingContext(
-                _sequencer,
+                _taskSequencer,
                 _beforeLoad,
                 _afterLoad
             );

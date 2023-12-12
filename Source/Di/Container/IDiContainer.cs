@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using GUtils.Di.Bindings;
 
 namespace GUtils.Di.Container
 {

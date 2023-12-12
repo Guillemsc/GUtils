@@ -22,7 +22,6 @@ namespace GUtils.Loading.Contexts
         public ILoadingContext DontRunAfterLoadActions() => this;
 
         public Task Execute(CancellationToken cancellationToken) => Task.CompletedTask;
-        public void Execute() { }
         public void ExecuteAsync() { }
     }
 }

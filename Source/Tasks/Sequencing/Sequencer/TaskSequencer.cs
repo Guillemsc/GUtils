@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using GUtils.Sequencing.Instructions;
-using GUtils.Tasks.CompletionSources;
+using GUtils.Tasks.Sequencing.Instructions;
 
-namespace GUtils.Sequencing.Sequencer
+namespace GUtils.Tasks.Sequencing.Sequencer
 {
     /// <inheritdoc />
-    public sealed class Sequencer : ISequencer
+    public sealed class TaskSequencer : ITaskSequencer
     {
         readonly Queue<Func<CancellationToken, Task>> _instructionQueue = new();
 
-        TaskCompletionSource<object> _taskCompletionSource;
-        CancellationTokenSource _cancellationTokenSource;
+        TaskCompletionSource<object>? _taskCompletionSource;
+        CancellationTokenSource? _cancellationTokenSource;
 
         public bool IsRunning { get; private set; }
         public bool Enabled { get; set; } = true;
@@ -44,6 +43,23 @@ namespace GUtils.Sequencing.Sequencer
             TryRunInstructions();
         }
 
+        public Task PlayAndAwait(Func<CancellationToken, Task> function)
+        {
+            TaskCompletionSource taskCompletionSource = new();
+
+            async Task Run(CancellationToken cancellationToken)
+            {
+                await function.Invoke(cancellationToken);
+                taskCompletionSource.SetResult();
+            }
+            
+            _instructionQueue.Enqueue(Run);
+
+            TryRunInstructions();
+            
+            return taskCompletionSource.Task;
+        }
+
         public void Kill()
         {
             if (_cancellationTokenSource == null)
@@ -56,14 +72,21 @@ namespace GUtils.Sequencing.Sequencer
             _cancellationTokenSource.Cancel();
         }
 
-        public Task WaitCompletition()
+        public Task AwaitCompletition(CancellationToken cancellationToken)
         {
             if (_taskCompletionSource == null)
             {
                 return Task.CompletedTask;
             }
+            
+            TaskCompletionSource _cancelTaskCompletionSource = new();
 
-            return _taskCompletionSource.Task;
+            cancellationToken.Register(() => _cancelTaskCompletionSource.TrySetResult());
+
+            return Task.WhenAny(
+                _taskCompletionSource.Task,
+                _cancelTaskCompletionSource.Task
+            );
         }
 
         async void TryRunInstructions()

@@ -58,9 +58,6 @@ namespace GUtils.Loading.Contexts
         /// <returns>A task representing the execution of the loading operations.</returns>
         Task Execute(CancellationToken cancellationToken);
 
-        [Obsolete("Execute is deprecated, please use ExecuteAsync instead.")]
-        void Execute();
-
         /// <summary>
         /// Executes the loading operations asynchronously.
         /// </summary>

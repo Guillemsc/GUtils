@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GUtils.Di.Children;
 using GUtils.Di.Container;
 using GUtils.Di.Delegates;
 using GUtils.Di.Installers;
@@ -56,19 +55,7 @@ namespace GUtils.Di.Builder
         /// </summary>
         IDiContainerBuilder Bind<T>(BindingBuilderDelegate<T> bindingBuilderDelegate);
 
-
-        [Obsolete("Use Install instead")]
-        IDiContainerBuilder Bind(IEnumerable<IInstaller> installers);
-
-        [Obsolete("Use Install instead")]
-        IDiContainerBuilder Bind(params IInstaller[] installers);
-
-        [Obsolete("Use Install instead")]
-        IDiContainerBuilder Bind(IReadOnlyList<IInstaller> installers);
-
-        [Obsolete("Use Install instead")]
-        IDiContainerBuilder Bind(Action<IDiContainerBuilder> action);
-
+        
         /// <summary>
         /// Installs all the bindings from a list of <see cref="IInstaller"/>s.
         /// </summary>
@@ -124,13 +111,7 @@ namespace GUtils.Di.Builder
         /// Calls the action when the builded <see cref="IDiContainer"/> gets disposed.
         /// </summary>
         IDiContainerBuilder WhenDispose(Action<IDiResolveContainer> action);
-
-        /// <summary>
-        /// Generates a <see cref="IDiChildContainer"/> from the current builder.
-        /// </summary>
-        [Obsolete]
-        IDiChildContainer Child();
-
+        
         /// <summary>
         /// Generates the <see cref="IDiContainer"/> from the current builder.
         /// At this point all non lazy bindings will get binded.

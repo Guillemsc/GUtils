@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GUtils.Di.Bindings;
-using GUtils.Di.Children;
 using GUtils.Di.Container;
 using GUtils.Di.Delegates;
 using GUtils.Di.Installers;
@@ -151,30 +150,6 @@ namespace GUtils.Di.Builder
             return this;
         }
 
-        [Obsolete("Use Install instead")]
-        public IDiContainerBuilder Bind(params IInstaller[] installers)
-        {
-            return Install(installers);
-        }
-
-        [Obsolete("Use Install instead")]
-        public IDiContainerBuilder Bind(IReadOnlyList<IInstaller> installers)
-        {
-            return Install(installers);
-        }
-
-        [Obsolete("Use Install instead")]
-        public IDiContainerBuilder Bind(IEnumerable<IInstaller> installers)
-        {
-            return Install(installers);
-        }
-
-        [Obsolete("Use Install instead")]
-        public IDiContainerBuilder Bind(Action<IDiContainerBuilder> action)
-        {
-            return Install(action);
-        }
-
         public IDiContainerBuilder Install(IEnumerable<IInstaller> installers)
         {
             foreach (IInstaller installer in installers)
@@ -283,18 +258,7 @@ namespace GUtils.Di.Builder
 
             return this;
         }
-
-        [Obsolete]
-        public IDiChildContainer Child()
-        {
-            DiChildContainer childContainer = new();
-
-            WhenBuild(childContainer.WhenParentContainerBuild);
-            WhenDispose(childContainer.Dispose);
-
-            return childContainer;
-        }
-
+        
         public IDiContainer? Build()
         {
             return Build(Array.Empty<IDiContainer>());

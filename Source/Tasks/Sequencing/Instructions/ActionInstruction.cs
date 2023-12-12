@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GUtils.Sequencing.Instructions
+namespace GUtils.Tasks.Sequencing.Instructions
 {
     public sealed class ActionInstruction : InstantInstruction
     {

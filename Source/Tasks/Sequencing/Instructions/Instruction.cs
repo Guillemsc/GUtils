@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace GUtils.Sequencing.Instructions
+namespace GUtils.Tasks.Sequencing.Instructions
 {
     public abstract class Instruction : IInstruction
     {

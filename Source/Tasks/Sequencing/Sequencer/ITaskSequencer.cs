@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using GUtils.Sequencing.Instructions;
+using GUtils.Tasks.Sequencing.Instructions;
 
-namespace GUtils.Sequencing.Sequencer
+namespace GUtils.Tasks.Sequencing.Sequencer
 {
     /// <summary>
     /// Represents an interface enqueing the execution of instructions or actions.
     /// Execution is done sequentally (played one after the other), where one
     /// instruction/action does not start until the previous one has finished running.
     /// </summary>
-    public interface ISequencer
+    public interface ITaskSequencer
     {
         /// <summary>
         /// Gets a value indicating whether the sequencer is currently running.
@@ -39,7 +39,18 @@ namespace GUtils.Sequencing.Sequencer
         /// Enqueues the specified asynchronous function.
         /// </summary>
         /// <param name="function">The asynchronous function to play.</param>
-        void Play(Func<CancellationToken, Task> function);
+        void Play(Func<CancellationToken, Task> function); 
+        
+        /// <summary>
+        /// Asynchronously plays a task and awaits its completion while allowing cancellation.
+        /// </summary>
+        /// <param name="function">The asynchronous function to play and await.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <remarks>
+        /// This method is designed for scenarios where you want to execute an asynchronous sequenced task
+        /// and await its completion.
+        /// </remarks>
+        Task PlayAndAwait(Func<CancellationToken, Task> function);
 
         /// <summary>
         /// Stops the sequencer and cancels any pending instructions or actions.
@@ -50,6 +61,6 @@ namespace GUtils.Sequencing.Sequencer
         /// Waits for the sequencer to complete all enqueued instructions or actions.
         /// </summary>
         /// <returns>A task representing the completion of the sequencer.</returns>
-        Task WaitCompletition();
+        Task AwaitCompletition(CancellationToken cancellationToken);
     }
 }
