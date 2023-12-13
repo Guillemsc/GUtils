@@ -3,6 +3,7 @@ using GUtils.ApplicationContexts.Contexts;
 using GUtils.ApplicationContexts.Handlers;
 using GUtils.ApplicationContexts.Services;
 using GUtils.Loading.Contexts;
+using GUtils.Services.Locators;
 
 namespace GUtils.Loading.Extensions
 {
@@ -14,11 +15,12 @@ namespace GUtils.Loading.Extensions
         }
         
         public static ILoadingContext EnqueueLoadAndStartApplicationContext(
-            this ILoadingContext loadingContext, 
-            IApplicationContextService applicationContextService,
+            this ILoadingContext loadingContext,
             IApplicationContext applicationContext
         )
         {
+            IApplicationContextService applicationContextService = ServiceLocator.Get<IApplicationContextService>();
+            
             IApplicationContextHandler handler = applicationContextService.Push(applicationContext);
 
             loadingContext
@@ -29,11 +31,12 @@ namespace GUtils.Loading.Extensions
         }
         
         public static ILoadingContext EnqueueUnloadApplicationContext(
-            this ILoadingContext loadingContext, 
-            IApplicationContextService applicationContextService,
+            this ILoadingContext loadingContext,
             IApplicationContext applicationContext
         )
         {
+            IApplicationContextService applicationContextService = ServiceLocator.Get<IApplicationContextService>();
+            
             IApplicationContextHandler handler = applicationContextService.Push(applicationContext);
 
             loadingContext.Enqueue(ct => handler.Unload());

@@ -30,13 +30,7 @@ namespace GUtils.Loading.Contexts
         /// <param name="action">The synchronous loading actions to be executed after the load finishes.</param>
         /// <returns>The current loading context.</returns>
         ILoadingContext EnqueueAfterLoad(params Action[] action);
-
-        [Obsolete("ShowInstantly is deprecated, please use RunBeforeLoadActionsInstantly instead.")]
-        ILoadingContext ShowInstantly();
-
-        [Obsolete("DoNotHide is deprecated, please use DontRunAfterLoadActions instead.")]
-        ILoadingContext DoNotHide();
-
+        
         /// <summary>
         /// Runs all the before loading actions immediately before the load begins.
         /// Before loading actions are added using <see cref="ILoadingService.AddBeforeLoading"/>

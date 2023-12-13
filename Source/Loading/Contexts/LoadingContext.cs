@@ -58,16 +58,6 @@ namespace GUtils.Loading.Contexts
             return this;
         }
 
-        public ILoadingContext ShowInstantly()
-        {
-            return RunBeforeLoadActionsInstantly();
-        }
-
-        public ILoadingContext DoNotHide()
-        {
-            return DontRunAfterLoadActions();
-        }
-
         public ILoadingContext RunBeforeLoadActionsInstantly()
         {
             _runBeforeLoadActionsInstantly = true;

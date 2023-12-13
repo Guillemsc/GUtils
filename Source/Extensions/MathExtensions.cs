@@ -109,7 +109,28 @@ namespace GUtils.Extensions
         {
             return (float)Math.Atan2(direction.Y, direction.X) * Rad2Deg;
         }
+        
+        public static int Clamp(int current, int min, int max)
+        {
+            current = Math.Max(current, min);
+            current = Math.Min(current, max);
 
+            return current;
+        }
+
+        public static float Clamp(float current, float min, float max)
+        {
+            current = Math.Max(current, min);
+            current = Math.Min(current, max);
+
+            return current;
+        }
+        
+        public static float Clamp01(float current)
+        {
+            return Clamp(current, 0f, 1f);
+        }
+        
         /// <summary>
         ///   <para>Linearly interpolates between a and b by t.</para>
         /// </summary>
@@ -119,6 +140,6 @@ namespace GUtils.Extensions
         /// <returns>
         ///   <para>The interpolated double result between the two double values.</para>
         /// </returns>
-        // public static double Lerp(double a, double b, float t) => a + (b - a) * Math.Clamp01(t);
+        public static double Lerp(double a, double b, float t) => a + (b - a) * Clamp01(t);
     }
 }
