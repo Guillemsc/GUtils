@@ -6,4 +6,5 @@ namespace GUtils.ApplicationContexts.Services;
 public interface IApplicationContextService
 {
     IApplicationContextHandler Push(IApplicationContext applicationContext);
+    IApplicationContextHandler GetPushedUnsafe<T>() where T : IApplicationContext;
 }

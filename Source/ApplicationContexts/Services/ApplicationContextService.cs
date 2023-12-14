@@ -46,6 +46,13 @@ public sealed class ApplicationContextService : IApplicationContextService
         return handler;
     }
 
+    public IApplicationContextHandler GetPushedUnsafe<T>() where T : IApplicationContext
+    {
+        Type type = typeof(T);
+        
+        return _states[type].Handler;
+    }
+
     Task LoadApplicationContext(IApplicationContext applicationContext)
     {
         Task Run(CancellationToken cancellationToken)

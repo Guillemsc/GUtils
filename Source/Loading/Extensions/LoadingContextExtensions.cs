@@ -30,14 +30,13 @@ namespace GUtils.Loading.Extensions
             return loadingContext;
         }
         
-        public static ILoadingContext EnqueueUnloadApplicationContext(
-            this ILoadingContext loadingContext,
-            IApplicationContext applicationContext
-        )
+        public static ILoadingContext EnqueueUnloadApplicationContext<T>(
+            this ILoadingContext loadingContext
+        ) where T : IApplicationContext
         {
             IApplicationContextService applicationContextService = ServiceLocator.Get<IApplicationContextService>();
             
-            IApplicationContextHandler handler = applicationContextService.Push(applicationContext);
+            IApplicationContextHandler handler = applicationContextService.GetPushedUnsafe<T>();
 
             loadingContext.Enqueue(ct => handler.Unload());
 
