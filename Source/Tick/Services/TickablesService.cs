@@ -9,12 +9,18 @@ namespace GUtils.Tick.Services
         readonly TickablesContainerTickable _preUpdateTickables = new();
         readonly TickablesContainerTickable _updateTickables = new();
         readonly TickablesContainerTickable _lateUpdateTickables = new();
+        readonly TickablesContainerTickable _physicsTickables = new();
 
         public void Tick()
         {
             _preUpdateTickables.Tick();
             _updateTickables.Tick();
             _lateUpdateTickables.Tick();
+        }
+
+        public void PhysicsTick()
+        {
+            _physicsTickables.Tick();
         }
         
         public void Add(ITickable tickable, TickType tickType)
@@ -37,6 +43,12 @@ namespace GUtils.Tick.Services
                 case TickType.LateUpdate:
                 {
                     _lateUpdateTickables.Add(tickable);
+                    break;
+                }
+                
+                case TickType.PhysicsUpdate:
+                {
+                    _physicsTickables.Add(tickable);
                     break;
                 }
             }
@@ -62,6 +74,12 @@ namespace GUtils.Tick.Services
                 case TickType.LateUpdate:
                 {
                     _lateUpdateTickables.Remove(tickable);
+                    break;
+                }
+                
+                case TickType.PhysicsUpdate:
+                {
+                    _physicsTickables.Remove(tickable);
                     break;
                 }
             }
@@ -90,6 +108,13 @@ namespace GUtils.Tick.Services
                 {
                     _lateUpdateTickables.Remove(tickable);
                     _lateUpdateTickables.ActuallyRemoveTickables();
+                    break;
+                }
+                
+                case TickType.PhysicsUpdate:
+                {
+                    _physicsTickables.Remove(tickable);
+                    _physicsTickables.ActuallyRemoveTickables();
                     break;
                 }
             }

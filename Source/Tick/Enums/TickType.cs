@@ -19,5 +19,10 @@ namespace GUtils.Tick.Enums
         /// Executed by the Unity's default MonoBehaviour LateUpdate.
         /// </summary>
         LateUpdate,
+        
+        /// <summary>
+        /// Executed by the physics.
+        /// </summary>
+        PhysicsUpdate,
     }
 }
