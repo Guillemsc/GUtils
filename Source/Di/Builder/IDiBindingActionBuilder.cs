@@ -6,7 +6,7 @@ namespace GUtils.Di.Builder
     /// <summary>
     /// Builder that, for some binded type with an instance, helps define some extra actions.
     /// </summary>
-    public interface IDiBindingActionBuilder<T>
+    public interface IDiBindingActionBuilder<out T>
     {
         /// <summary>
         /// Type used to resolve the instance.
