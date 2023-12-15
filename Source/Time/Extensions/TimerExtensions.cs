@@ -75,5 +75,15 @@ namespace GUtils.Time.Extensions
             
             return timer.AwaitSpan(time, cancellationToken);
         }
+
+        public static bool HasReachedOrNotStarted(this ITimer timer, TimeSpan timeSpan)
+        {
+            if (!timer.Started)
+            {
+                return true;
+            }
+
+            return timer.HasReached(timeSpan);
+        }
     }
 }
