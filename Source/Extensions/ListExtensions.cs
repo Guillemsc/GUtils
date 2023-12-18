@@ -161,5 +161,25 @@ namespace GUtils.Extensions
                 }
             }
         }
+        
+        public static void RemoveLast<T>(this List<T> list)
+        {
+            if (list.Count == 0)
+            {
+                return;
+            }
+            
+            list.RemoveAt(list.Count - 1);
+        }
+        
+        public static void RemoveFirst<T>(this List<T> list)
+        {
+            if (list.Count == 0)
+            {
+                return;
+            }
+            
+            list.RemoveAt(0);
+        }
     }
 }
