@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GUtils.ApplicationContexts.Contexts;
 using GUtils.ApplicationContexts.Handlers;
 using GUtils.ApplicationContexts.State;
+using GUtils.Optionals;
 using GUtils.Tasks.Sequencing.Sequencer;
 
 namespace GUtils.ApplicationContexts.Services;
@@ -12,19 +13,10 @@ namespace GUtils.ApplicationContexts.Services;
 public sealed class ApplicationContextService : IApplicationContextService
 {
     readonly ITaskSequencer _taskSequencer = new TaskSequencer();
-    readonly Dictionary<Type, ApplicationContextState> _states = new();
+    readonly List<ApplicationContextState> _states = new();
     
     public IApplicationContextHandler Push(IApplicationContext applicationContext)
     {
-        Type type = applicationContext.GetType();
-
-        bool alreadyPushed = _states.TryGetValue(type, out ApplicationContextState? state);
-
-        if (alreadyPushed)
-        {
-            return state!.Handler;
-        }
-        
         Task Load()
             => LoadApplicationContext(applicationContext);
         
@@ -40,8 +32,8 @@ public sealed class ApplicationContextService : IApplicationContextService
             Unload
         );
 
-        state = new ApplicationContextState(type, handler);
-        _states.Add(type, state);
+        ApplicationContextState state = new(applicationContext, handler);
+        _states.Add(state);
 
         return handler;
     }
@@ -49,23 +41,46 @@ public sealed class ApplicationContextService : IApplicationContextService
     public IApplicationContextHandler GetPushedUnsafe<T>() where T : IApplicationContext
     {
         Type type = typeof(T);
-        
-        return _states[type].Handler;
+
+        foreach (ApplicationContextState state in _states)
+        {
+            bool isType = state.ApplicationContext.GetType() == type;
+
+            if (isType)
+            {
+                return state.Handler;
+            }
+        }
+
+        throw new Exception();
+    }
+    
+    Optional<ApplicationContextState> GetStateForContext(IApplicationContext applicationContext)
+    {
+        foreach (ApplicationContextState state in _states)
+        {
+            if (state.ApplicationContext == applicationContext)
+            {
+                return state;
+            }
+        }
+
+        return Optional<ApplicationContextState>.None;
     }
 
     Task LoadApplicationContext(IApplicationContext applicationContext)
     {
         Task Run(CancellationToken cancellationToken)
         {
-            Type type = applicationContext.GetType();
+            Optional<ApplicationContextState> optionalState = GetStateForContext(applicationContext);
 
-            bool alreadyPushed = _states.TryGetValue(type, out ApplicationContextState? state);
+            bool hasState = optionalState.TryGet(out ApplicationContextState state);
 
-            if (!alreadyPushed)
+            if (!hasState)
             {
                 return Task.CompletedTask;
             }
-
+            
             if (state!.Loaded)
             {
                 return Task.CompletedTask;
@@ -81,11 +96,11 @@ public sealed class ApplicationContextService : IApplicationContextService
 
     void StartApplicationContext(IApplicationContext applicationContext)
     {
-        Type type = applicationContext.GetType();
+        Optional<ApplicationContextState> optionalState = GetStateForContext(applicationContext);
 
-        bool alreadyPushed = _states.TryGetValue(type, out ApplicationContextState? state);
+        bool hasState = optionalState.TryGet(out ApplicationContextState state);
 
-        if (!alreadyPushed)
+        if (!hasState)
         {
             return;
         }
@@ -102,14 +117,16 @@ public sealed class ApplicationContextService : IApplicationContextService
     {
         Task Run(CancellationToken cancellationToken)
         {
-            Type type = applicationContext.GetType();
+            Optional<ApplicationContextState> optionalState = GetStateForContext(applicationContext);
 
-            bool alreadyPushed = _states.TryGetValue(type, out ApplicationContextState? state);
+            bool hasState = optionalState.TryGet(out ApplicationContextState state);
 
-            if (!alreadyPushed)
+            if (!hasState)
             {
                 return Task.CompletedTask;
             }
+
+            _states.Remove(state);
 
             if (!state!.Loaded)
             {
