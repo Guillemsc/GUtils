@@ -60,11 +60,11 @@ namespace GUtils.Di.Contexts
         {
             IDiContainerBuilder builder = new DiContainerBuilder();
 
-            var disposables = new List<IDisposable>();
+            List<IDisposable> disposables = new();
 
             foreach (var installer in _loadableInstallers)
             {
-                var disposable = installer.Load();
+                IDisposable<IInstaller> disposable = installer.Load();
                 _installers.Add(disposable.Value);
                 disposables.Add(disposable);
             }
