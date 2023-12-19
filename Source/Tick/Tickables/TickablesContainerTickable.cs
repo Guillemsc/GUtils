@@ -15,11 +15,17 @@ namespace GUtils.Tick.Tickables
 
         readonly List<ITickable> _tickables = new();
 
+        public bool IsTicking { get; private set; }
+        
         public void Tick()
         {
             ActuallyRemoveTickables();
 
+            IsTicking = true;
+            
             TickTickables();
+            
+            IsTicking = false;
 
             ActuallyAddTickables();
         }
@@ -112,6 +118,11 @@ namespace GUtils.Tick.Tickables
 
         public void ActuallyRemoveTickables()
         {
+            if (IsTicking)
+            {
+                return;
+            }
+            
             foreach (ITickable tickable in _tickablesToRemove)
             {
                 _tickables.Remove(tickable);
