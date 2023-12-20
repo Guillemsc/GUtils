@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GUtils.ApplicationContexts.Handlers;
-
-public interface IApplicationContextHandler
+namespace GUtils.ApplicationContexts.Handlers
 {
-    Task Load();
-    void Start();
-    Task Unload();
+    public interface IApplicationContextHandler
+    {
+        Task Load();
+        void Start();
+        Task Unload();
+    }
 }

@@ -1,8 +1,11 @@
-namespace GUtils.AnimationGraphs;
-
-public sealed class NopAnimationGraphPlayer : IAnimationGraphPlayer
+namespace GUtils.AnimationGraphs
 {
-    public static readonly NopAnimationGraphPlayer Instance = new();
-    
-    public void Tick() { }
+    public sealed class NopAnimationGraphPlayer : IAnimationGraphPlayer
+    {
+        public static readonly NopAnimationGraphPlayer Instance = new();
+
+        public void Tick()
+        {
+        }
+    }
 }

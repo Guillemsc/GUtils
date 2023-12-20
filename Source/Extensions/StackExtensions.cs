@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 
-namespace GUtils.Extensions;
-
-public static class StackExtensions
+namespace GUtils.Extensions
 {
-    public static void PushRange<T>(this Stack<T> stack, IReadOnlyList<T> range)
+    public static class StackExtensions
     {
-        foreach (T item in range)
+        public static void PushRange<T>(this Stack<T> stack, IReadOnlyList<T> range)
         {
-            stack.Push(item);   
+            foreach (T item in range)
+            {
+                stack.Push(item);
+            }
         }
     }
 }

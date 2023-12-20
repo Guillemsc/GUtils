@@ -1,10 +1,11 @@
 using GUtils.ApplicationContexts.Contexts;
 using GUtils.ApplicationContexts.Handlers;
 
-namespace GUtils.ApplicationContexts.Services;
-
-public interface IApplicationContextService
+namespace GUtils.ApplicationContexts.Services
 {
-    IApplicationContextHandler Push(IApplicationContext applicationContext);
-    IApplicationContextHandler GetPushedUnsafe<T>() where T : IApplicationContext;
+    public interface IApplicationContextService
+    {
+        IApplicationContextHandler Push(IApplicationContext applicationContext);
+        IApplicationContextHandler GetPushedUnsafe<T>() where T : IApplicationContext;
+    }
 }

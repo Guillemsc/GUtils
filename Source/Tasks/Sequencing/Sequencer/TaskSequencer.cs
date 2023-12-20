@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using GUtils.Tasks.CompletionSources;
 using GUtils.Tasks.Sequencing.Instructions;
 
 namespace GUtils.Tasks.Sequencing.Sequencer

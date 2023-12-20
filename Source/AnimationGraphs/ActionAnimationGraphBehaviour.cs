@@ -1,29 +1,30 @@
 using System;
 
-namespace GUtils.AnimationGraphs;
-
-public sealed class ActionAnimationGraphBehaviour : AnimationGraphBehaviour
+namespace GUtils.AnimationGraphs
 {
-    readonly Action _action;
-
-    public ActionAnimationGraphBehaviour(Action action)
+    public sealed class ActionAnimationGraphBehaviour : AnimationGraphBehaviour
     {
-        _action = action;
-    }
+        readonly Action _action;
 
-    public override void Enter()
-    {
-        _action.Invoke();
-        Completed = true;
-    }
+        public ActionAnimationGraphBehaviour(Action action)
+        {
+            _action = action;
+        }
 
-    public override void Tick()
-    {
+        public override void Enter()
+        {
+            _action.Invoke();
+            Completed = true;
+        }
 
-    }
+        public override void Tick()
+        {
 
-    public override void Exit()
-    {
-        
+        }
+
+        public override void Exit()
+        {
+
+        }
     }
 }

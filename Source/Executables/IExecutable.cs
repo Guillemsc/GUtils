@@ -1,6 +1,7 @@
-﻿namespace GUtils.Executables;
-
-public interface IExecutable
+﻿namespace GUtils.Executables
 {
-    void Execute();
+    public interface IExecutable
+    {
+        void Execute();
+    }
 }

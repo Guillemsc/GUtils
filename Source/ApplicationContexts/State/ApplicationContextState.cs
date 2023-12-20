@@ -2,21 +2,22 @@
 using GUtils.ApplicationContexts.Contexts;
 using GUtils.ApplicationContexts.Handlers;
 
-namespace GUtils.ApplicationContexts.State;
-
-public sealed class ApplicationContextState
+namespace GUtils.ApplicationContexts.State
 {
-    public IApplicationContext ApplicationContext { get; }
-    public IApplicationContextHandler Handler { get; }
-    
-    public bool Loaded { get; set; }
-    
-    public ApplicationContextState(
-        IApplicationContext applicationContext, 
-        IApplicationContextHandler handler
-        )
+    public sealed class ApplicationContextState
     {
-        ApplicationContext = applicationContext;
-        Handler = handler;
+        public IApplicationContext ApplicationContext { get; }
+        public IApplicationContextHandler Handler { get; }
+
+        public bool Loaded { get; set; }
+
+        public ApplicationContextState(
+            IApplicationContext applicationContext,
+            IApplicationContextHandler handler
+        )
+        {
+            ApplicationContext = applicationContext;
+            Handler = handler;
+        }
     }
 }

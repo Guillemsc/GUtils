@@ -1,7 +1,8 @@
-namespace GUtils.Time.Services;
-
-public interface IDeltaTimeService
+namespace GUtils.Time.Services
 {
-    float DeltaTime { get;}
-    float PhysicsDeltaTime { get; }
+    public interface IDeltaTimeService
+    {
+        float DeltaTime { get;}
+        float PhysicsDeltaTime { get; }
+    }   
 }

@@ -141,5 +141,13 @@ namespace GUtils.Extensions
         ///   <para>The interpolated double result between the two double values.</para>
         /// </returns>
         public static double Lerp(double a, double b, float t) => a + (b - a) * Clamp01(t);
+        
+        /// <summary>
+        /// Returns a value with the magnitude of x and the sign of y.
+        /// </summary>
+        public static double CopySign(double magnitude, double sign)
+        {
+            return sign > 0 ? Math.Abs(magnitude) : -Math.Abs(magnitude);
+        }
     }
 }
