@@ -46,7 +46,7 @@ namespace GUtils.Tasks.Sequencing.Sequencer
 
         public Task PlayAndAwait(Func<CancellationToken, Task> function)
         {
-            TaskCompletionSource taskCompletionSource = new();
+            CompletionSources.TaskCompletionSource taskCompletionSource = new();
 
             async Task Run(CancellationToken cancellationToken)
             {
@@ -80,7 +80,7 @@ namespace GUtils.Tasks.Sequencing.Sequencer
                 return Task.CompletedTask;
             }
             
-            TaskCompletionSource _cancelTaskCompletionSource = new();
+            CompletionSources.TaskCompletionSource _cancelTaskCompletionSource = new();
 
             cancellationToken.Register(() => _cancelTaskCompletionSource.TrySetResult());
 
