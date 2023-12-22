@@ -12,7 +12,7 @@ namespace GUtils.Tasks.Sequencing.Sequencer
     {
         readonly Queue<Func<CancellationToken, Task>> _instructionQueue = new();
 
-        TaskCompletionSource<object>? _taskCompletionSource;
+        CompletionSources.TaskCompletionSource? _taskCompletionSource;
         CancellationTokenSource? _cancellationTokenSource;
 
         public bool IsRunning { get; private set; }
@@ -104,7 +104,7 @@ namespace GUtils.Tasks.Sequencing.Sequencer
 
             IsRunning = true;
 
-            _taskCompletionSource = new TaskCompletionSource<object>();
+            _taskCompletionSource = new CompletionSources.TaskCompletionSource();
             _cancellationTokenSource = new CancellationTokenSource();
 
             while (_instructionQueue.Count > 0)
@@ -122,7 +122,7 @@ namespace GUtils.Tasks.Sequencing.Sequencer
             _cancellationTokenSource.Dispose();
             _cancellationTokenSource = null;
 
-            _taskCompletionSource.SetResult(null);
+            _taskCompletionSource.SetResult();
             _taskCompletionSource = null;
 
             // We check if we can play again to avoid issues with
