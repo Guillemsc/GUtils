@@ -1,3 +1,4 @@
+using System;
 using GUtils.Time.TimeSources;
 
 namespace GUtils.Time.TimeContexts
@@ -16,5 +17,7 @@ namespace GUtils.Time.TimeContexts
         /// Gets the delta time, which is the time elapsed since the last time update (usually last frame).
         /// </summary>
         float DeltaTime { get; }
+        
+        event Action OnTimeScaleChanged;
     }
 }

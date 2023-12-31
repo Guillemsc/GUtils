@@ -7,7 +7,7 @@ namespace GUtils.Caching.Cache
     /// Utility for caching the result of some operation.
     /// When the operation is executed, the result is cached and used instead for the next times.
     /// </summary>
-    public sealed class CachedResult<TResult> : IClearableCache
+    public class CachedResult<TResult> : IClearableCache
     {
         readonly Func<TResult> _getResult;
 
