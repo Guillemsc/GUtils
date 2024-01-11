@@ -92,7 +92,7 @@ namespace GUtils.Extensions
         /// Checks if provided index is the last index of the list.
         /// </summary>
         /// <returns>True if it's the last index, false if it's not. If list is empty, returns false.</returns>
-        public static bool IsLastIndex<T>(this List<T> list, int index)
+        public static bool IsLastIndex<T>(this IReadOnlyList<T> list, int index)
         {
             if (index < 0)
             {
@@ -100,6 +100,48 @@ namespace GUtils.Extensions
             }
 
             return list.Count - 1 == index;
+        }
+        
+        /// <summary>
+        /// Adds 1 to the provided index. If resulting index goes over array lenght, returns 0.
+        /// </summary>
+        public static int GetNextOrSmallestIndex<T>(this IReadOnlyList<T> array, int index)
+        {
+            int newIndex = index + 1;
+
+            if (newIndex >= array.Count)
+            {
+                newIndex = 0;
+            }
+
+            return newIndex;
+        }
+
+        /// <summary>
+        /// Substracts 1 to the provided index. If resulting index is smaller than zero, returns largest array index.
+        /// </summary>
+        public static int GetPreviousOrLargestIndex<T>(this IReadOnlyList<T> array, int index)
+        {
+            int newIndex = index - 1;
+
+            if (newIndex < 0)
+            {
+                newIndex = array.Count - 1;
+            }
+
+            return newIndex;
+        }
+        
+        /// <summary>
+        /// Performs the specified action on each element of the List.
+        /// </summary>
+        public static void ForEach<T>(this IReadOnlyList<T> array, Action<T> action)
+        {
+            for (int i = 0; i < array.Count; i++)
+            {
+                T item = array[i];
+                action.Invoke(item);
+            }
         }
     }
 }
