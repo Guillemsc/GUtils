@@ -15,6 +15,42 @@ namespace GUtils.ApplicationContexts.Services
         readonly ITaskSequencer _taskSequencer = new TaskSequencer();
         readonly List<ApplicationContextState> _states = new();
 
+        public bool IsAnyPushed<T>() where T : IApplicationContextHandler
+        {
+            Type type = typeof(T);
+
+            return IsAnyPushed(type);
+        }
+        
+        public bool IsAnyPushed(Type type) 
+        {
+            foreach (ApplicationContextState state in _states)
+            {
+                if (state.ApplicationContext.GetType() == type)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
+        public bool IsAnyLoaded(Type type) 
+        {
+            foreach (ApplicationContextState state in _states)
+            {
+                if (state.ApplicationContext.GetType() == type)
+                {
+                    if (state.Loaded)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+        
         public IApplicationContextHandler Push(IApplicationContext applicationContext)
         {
             Task Load()
@@ -107,7 +143,7 @@ namespace GUtils.ApplicationContexts.Services
 
             if (!state!.Loaded)
             {
-                return;
+                throw new Exception("Tried to start ApplicationContext, but it was not loaded");
             }
 
             applicationContext.Start();
@@ -130,7 +166,7 @@ namespace GUtils.ApplicationContexts.Services
 
                 if (!state!.Loaded)
                 {
-                    return Task.CompletedTask;
+                    throw new Exception("Tried to unload ApplicationContext, but it was not loaded");
                 }
 
                 state!.Loaded = false;

@@ -9,9 +9,21 @@ namespace GUtils.Tasks.Trackers
     /// <inheritdoc cref="IAsyncTaskRunner" />
     public sealed class AsyncTaskRunner : IAsyncTaskRunner, IDisposable
     {
+        readonly Action<Exception>? _onException; 
+        
         CancellationTokenSource _cancellationTokenSource = new();
         bool _hasRunAny;
         bool _isCanceledForever;
+
+        public AsyncTaskRunner()
+        {
+            
+        }
+
+        public AsyncTaskRunner(Action<Exception> onException)
+        {
+            _onException = onException;
+        }
 
         public Task Run(Func<CancellationToken, Task> func)
         {
@@ -23,7 +35,15 @@ namespace GUtils.Tasks.Trackers
             _hasRunAny = true;
 
             var task = func.Invoke(_cancellationTokenSource.Token);
-            task.RunAsync(e => throw e);
+            task.RunAsync(e =>
+            {
+                if (_onException == null)
+                {
+                    throw e;   
+                }
+                
+                _onException.Invoke(e);
+            });
             return task;
         }
 

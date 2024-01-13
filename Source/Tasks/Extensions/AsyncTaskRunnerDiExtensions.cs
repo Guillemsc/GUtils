@@ -2,6 +2,7 @@ using System;
 using GUtils.Di.Builder;
 using GUtils.Tasks.Runners;
 using GUtils.Tasks.Trackers;
+using GUtilsGodot.Tasks.Extensions;
 
 namespace GUtils.Tasks.Extensions
 {
@@ -23,7 +24,7 @@ namespace GUtils.Tasks.Extensions
             }
 
             return builder.Bind<IAsyncTaskRunner, AsyncTaskRunner>()
-                .FromInstance(new AsyncTaskRunner())
+                .FromInstance(new AsyncTaskRunner(AsyncTaskRunnerExtensions.PrintException))
                 .WhenDispose(Dispose)
                 .NonLazy();
         }
