@@ -8,11 +8,6 @@ namespace GUtils.Tasks.Extensions
 {
     public static class AsyncTaskRunnerDiExtensions
     {
-        [Obsolete("Use InstallAsyncTaskRunner")]
-        public static IDiBindingActionBuilder<AsyncTaskRunner> BindAsyncTaskRunner(
-            this IDiContainerBuilder builder
-        ) => InstallAsyncTaskRunner(builder);
-
         public static IDiBindingActionBuilder<AsyncTaskRunner> InstallAsyncTaskRunner(
             this IDiContainerBuilder builder
         )

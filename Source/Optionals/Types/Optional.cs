@@ -32,7 +32,7 @@ namespace GUtils.Optionals
         /// A new optional value of type <typeparamref name="T"/> with the provided <paramref name="value"/>.
         /// If the provided value is null, it will return <see cref="Optional{TSource}.None"/>.
         /// </returns>
-        public static Optional<T> Some(T value)
+        public static Optional<T> Some(T? value)
         {
             if (value == null)
             {
