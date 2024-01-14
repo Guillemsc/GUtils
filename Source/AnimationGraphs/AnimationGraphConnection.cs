@@ -18,6 +18,11 @@ namespace GUtils.AnimationGraphs
             To = to;
         }
 
+        public void CopyConditions(AnimationGraphConnection animationGraphConnection)
+        {
+            Conditions.AddRange(animationGraphConnection.Conditions);
+        }
+        
         public void Set()
         {
             OnSetActions.ForEach(o => o.Invoke());
