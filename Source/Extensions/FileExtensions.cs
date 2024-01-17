@@ -32,7 +32,7 @@ namespace GUtils.Extensions
                     return Optional<ErrorMessage>.None;
                 }
 
-                string filePathDirectory = Path.GetDirectoryName(filePath);
+                string? filePathDirectory = Path.GetDirectoryName(filePath);
 
                 if (string.IsNullOrEmpty(filePathDirectory))
                 {
@@ -83,30 +83,7 @@ namespace GUtils.Extensions
 
             return TryCatchExtensions.InvokeCatchErrorAsync(Save, cancellationToken);
         }
-
-        /// <summary>
-        /// Saves an array of bytes to some directory asynchronously.
-        /// If the directory could not be found, it creates it.
-        /// If file already existed, it deletes it.
-        /// </summary>
-        public static async Task SaveBytesAsync(string filePath, byte[] data, CancellationToken cancellationToken)
-        {
-            Optional<ErrorMessage> optionalErrorMessage = await SaveBytesWithErrorAsync(filePath, data, cancellationToken);
-
-            bool hasErrorMessage = optionalErrorMessage.TryGet(out ErrorMessage errorMessage);
-
-            if (hasErrorMessage)
-            {
-                // DebugOnlyUnityLogger.Instance.Log(
-                //     LogType.Error,
-                //     "There was an error trying to save bytes async to filePath {0}, at {1). Error: {2}}",
-                //     filePath,
-                //     nameof(FileExtensions),
-                //     errorMessage
-                // );
-            }
-        }
-
+        
         /// <summary>
         /// Loads bytes from a file asynchronously, along with an error message if any error occurs.
         /// </summary>
@@ -146,43 +123,6 @@ namespace GUtils.Extensions
                 Load,
                 cancellationToken
             );
-        }
-
-        /// <summary>
-        /// Loads the bytes from a file asynchronously.
-        /// </summary>
-        /// <param name="filePath">The path of the file to load.</param>
-        /// <param name="cancellationToken">The cancellation token to cancel the asynchronous operation.</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains an optional byte array if the file
-        /// was successfully loaded,
-        /// or <see cref="Optional{T}.None"/> if any error occurs during the loading process.
-        /// </returns>
-        public static async Task<Optional<byte[]>> LoadBytesAsync(
-            string filePath,
-            CancellationToken cancellationToken
-        )
-        {
-            OneOf<byte[], ErrorMessage> oneOfResult = await LoadBytesWithErrorAsync(
-                filePath,
-                cancellationToken
-            );
-
-            bool hasError = oneOfResult.TryGetSecond(out ErrorMessage errorMessage);
-
-            if (hasError)
-            {
-                // DebugOnlyUnityLogger.Instance.Log(
-                //     LogType.Error,
-                //     "There was an exception trying to load bytes async to filePath {0}, at {1). Exception: {2}}",
-                //     filePath,
-                //     nameof(FileExtensions),
-                //     errorMessage
-                // );
-                return Optional<byte[]>.None;
-            }
-
-            return oneOfResult.UnsafeGetFirst();
         }
     }
 }

@@ -9,9 +9,9 @@
 // {
 //     /// <inheritdoc />
 //     /// <summary>
-//     /// Implementation of <see cref="IStorageMethod"/> where data gets saved as bytes to disk.
+//     /// Implementation of <see cref="IPersistenceStorageMethod"/> where data gets saved as bytes to disk.
 //     /// </summary>
-//     public class FileStorageMethod : IStorageMethod
+//     public class FileStorageMethod : IPersistenceStorageMethod
 //     {
 //         public Task<Optional<ErrorMessage>> Save(string localPath, string data, CancellationToken cancellationToken)
 //         {
@@ -49,12 +49,12 @@
 //         {
 //             return string.Format(
 //                 "{0}{1}",
-//                 GetStorageDirectory(),
+//                 GetBaseStorageDirectory(),
 //                 fileName
 //             );
 //         }
 //
-//         // public static string GetStorageDirectory()
+//         // public static string GetBaseStorageDirectory()
 //         // {
 //         //     return Path.Combine(
 //         //         Application.persistentDataPath,
@@ -64,7 +64,7 @@
 //
 //         public static void ClearAllStoredData()
 //         {
-//             string path = GetStorageDirectory();
+//             string path = GetBaseStorageDirectory();
 //
 //             Directory.Delete(path, recursive: true);
 //         }

@@ -9,7 +9,7 @@ namespace GUtils.Persistence.StorageMethods
     /// <summary>
     /// Represents a storage method for saving and loading data.
     /// </summary>
-    public interface IStorageMethod
+    public interface IPersistenceStorageMethod
     {
         /// <summary>
         /// Saves the specified data to the specified local path.

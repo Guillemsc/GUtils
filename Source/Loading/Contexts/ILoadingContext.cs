@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GUtils.Loading.Loadables;
 using GUtils.Loading.Services;
 
 namespace GUtils.Loading.Contexts
@@ -16,6 +17,13 @@ namespace GUtils.Loading.Contexts
         /// <param name="function">The asynchronous task-based loading function to be executed.</param>
         /// <returns>The current loading context.</returns>
         ILoadingContext Enqueue(Func<CancellationToken, Task> function);
+        
+        /// <summary>
+        /// Enqueues an asynchronous task-based loading function to be executed.
+        /// </summary>
+        /// <param name="loadable">The asynchronous task-based loading function to be executed.</param>
+        /// <returns>The current loading context.</returns>
+        ILoadingContext Enqueue(ILoadable loadable);
 
         /// <summary>
         /// Enqueues a synchronous loading action to be executed.

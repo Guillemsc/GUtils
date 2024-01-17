@@ -1,5 +1,5 @@
-#nullable enable
 using System;
+using System.Threading.Tasks;
 
 namespace GUtils.Optionals
 {
@@ -216,6 +216,16 @@ namespace GUtils.Optionals
 
             value = defaultValue;
             return value;
+        }
+        
+        public static Task<Optional<T>> SomeAsTaskResult<T>(T? value)
+        {
+            return Task.FromResult(Optional<T>.Some(value));
+        }
+        
+        public static Task<Optional<T>> NoneAsTaskResult<T>()
+        {
+            return Task.FromResult(Optional<T>.None);
         }
     }
 }

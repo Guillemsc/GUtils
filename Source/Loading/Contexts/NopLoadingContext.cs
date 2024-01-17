@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GUtils.Loading.Loadables;
 
 namespace GUtils.Loading.Contexts
 {
@@ -14,6 +15,7 @@ namespace GUtils.Loading.Contexts
         }
 
         public ILoadingContext Enqueue(Func<CancellationToken, Task> function) => this;
+        public ILoadingContext Enqueue(ILoadable loadable) => this;
         public ILoadingContext Enqueue(Action action) => this;
         public ILoadingContext EnqueueAfterLoad(params Action[] action) => this;
         public ILoadingContext RunBeforeLoadActionsInstantly() => this;

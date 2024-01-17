@@ -24,13 +24,13 @@ namespace GUtils.Di.Builder
         /// This is useful for dynamically modify what gets installed depending on parameters.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Thrown when settings type cannot be found.</exception>
-        T GetSettings<T>();
+        T GetSettingsUnsafe<T>();
 
         /// <summary>
         /// Gets some settings that can be read at installation time.
         /// This is useful for dynamically modify what gets installed depending on parameters.
         /// </summary>
-        bool TryGetSettings<T>(out T settings);
+        bool TryGetSettings<T>(out T? settings);
 
         /// <summary>
         /// Begins the binding/registering of some type.
@@ -83,9 +83,19 @@ namespace GUtils.Di.Builder
         IDiContainerBuilder Install(Action<IDiContainerBuilder> action);
 
         /// <summary>
+        /// Adds an already resolved container.
+        /// </summary>
+        IDiContainerBuilder Add(IDiContainer container);
+        
+        /// <summary>
+        /// Adds an list of already resolved container.
+        /// </summary>
+        IDiContainerBuilder Add(IReadOnlyList<IDiContainer> containers);
+
+        /// <summary>
         /// Tries to get a binding from the builder.
         /// </summary>
-        bool TryGetBinding<T>(out IDiBindingActionBuilder<T> diBindingActionBuilder);
+        bool TryGetBinding<T>(out IDiBindingActionBuilder<T>? diBindingActionBuilder);
 
         /// <summary>
         /// Calls the action just after the <see cref="IDiContainer"/> gets builded.
@@ -116,18 +126,6 @@ namespace GUtils.Di.Builder
         /// Generates the <see cref="IDiContainer"/> from the current builder.
         /// At this point all non lazy bindings will get binded.
         /// </summary>
-        IDiContainer? Build();
-
-        /// <summary>
-        /// Generates the <see cref="IDiContainer"/> from the current builder, and an extra container.
-        /// At this point all non lazy bindings will get binded.
-        /// </summary>
-        IDiContainer? Build(IDiContainer parentContainer);
-
-        /// <summary>
-        /// Generates the <see cref="IDiContainer"/> from the current builder, and some extra containers.
-        /// At this point all non lazy bindings will get binded.
-        /// </summary>
-        IDiContainer? Build(IReadOnlyList<IDiContainer> extraContainers);
+        IDiContainer Build();
     }
 }

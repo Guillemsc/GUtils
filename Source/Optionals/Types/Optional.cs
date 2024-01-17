@@ -17,7 +17,7 @@ namespace GUtils.Optionals
         readonly T _value;
 
         public bool HasValue { get; }
-
+        
         Optional(T value)
         {
             _value = value;

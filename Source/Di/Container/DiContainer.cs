@@ -125,19 +125,19 @@ namespace GUtils.Di.Container
 
         public bool TryResolve<T>(out T value)
         {
-            return TryResolveWithBindings(_bindings, out value);
+            return TryResolveWithBindings(_bindings, out value!);
         }
 
         public bool TryResolve<T>(object id, out T value)
         {
-            bool idFound = _bindingsById.TryGetValue(id, out Dictionary<Type, IDiBinding> bindings);
+            bool idFound = _bindingsById.TryGetValue(id, out Dictionary<Type, IDiBinding>? bindings);
 
             if (!idFound)
             {
                 throw new Exception($"Tried to resolve but id {id} could not be found");
             }
 
-            return TryResolveWithBindings(bindings, out value);
+            return TryResolveWithBindings(bindings!, out value!);
         }
 
         public void Dispose()
@@ -168,23 +168,23 @@ namespace GUtils.Di.Container
             }
         }
 
-        bool TryResolveWithBindings<T>(Dictionary<Type, IDiBinding> bindings, out T value)
+        bool TryResolveWithBindings<T>(Dictionary<Type, IDiBinding> bindings, out T? value)
         {
             Type type = typeof(T);
 
-            bool found = bindings.TryGetValue(type, out IDiBinding binding);
+            bool found = bindings.TryGetValue(type, out IDiBinding? binding);
 
             if (found)
             {
-                bool isCircularDependency = _resolvingStack.Contains(binding);
+                bool isCircularDependency = _resolvingStack.Contains(binding!);
 
                 if (isCircularDependency)
                 {
                     throw new Exception($"Circular dependency found resolving {type.Name}");
                 }
 
-                Bind(binding);
-                value = (T)binding.Value;
+                Bind(binding!);
+                value = (T)binding!.Value;
                 return true;
             }
 

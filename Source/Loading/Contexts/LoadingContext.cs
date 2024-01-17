@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using GUtils.Delegates.Animation;
 using GUtils.Extensions;
+using GUtils.Loading.Loadables;
 using GUtils.Tasks.Sequencing.Instructions;
 using GUtils.Tasks.Sequencing.Sequencer;
 
@@ -38,7 +39,13 @@ namespace GUtils.Loading.Contexts
 
         public ILoadingContext Enqueue(Func<CancellationToken, Task> function)
         {
-            _enqueuedInstructions.Enqueue(new TaskInstruction( function ));
+            _enqueuedInstructions.Enqueue(new TaskInstruction(function));
+            return this;
+        }
+
+        public ILoadingContext Enqueue(ILoadable loadable)
+        {
+            _enqueuedInstructions.Enqueue(new TaskInstruction(loadable.Load));
             return this;
         }
 

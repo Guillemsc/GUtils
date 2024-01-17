@@ -14,6 +14,8 @@ namespace GUtils.Di.Builder
 
         readonly Dictionary<Type, object> _settings = new();
 
+        readonly List<IDiContainer> _extraContainers = new();
+        
         readonly List<Action<IDiContainer?>> _whenBuild = new();
         readonly List<Action<IDiResolveContainer>> _whenInit = new();
         readonly List<Action<IDiResolveContainer>> _whenDispose = new();
@@ -76,26 +78,27 @@ namespace GUtils.Di.Builder
             Bind<T>().FromInstance(settings);
         }
 
-        public T GetSettings<T>()
+        public T GetSettingsUnsafe<T>()
         {
-            if (!TryGetSettings(out T settings))
+            if (!TryGetSettings(out T? settings))
             {
                 throw new InvalidOperationException($"There are no settings of type {typeof(T).FullName} available");
             }
 
-            return settings;
+            return settings!;
         }
 
-        public bool TryGetSettings<T>(out T settings)
+        public bool TryGetSettings<T>(out T? settings)
         {
-            var type = typeof(T);
-            if (!_settings.TryGetValue(type, out object objectSettings))
+            Type type = typeof(T);
+            
+            if (!_settings.TryGetValue(type, out object? objectSettings))
             {
                 settings = default;
                 return false;
             }
 
-            settings = (T)objectSettings;
+            settings = (T)objectSettings!;
             return true;
         }
 
@@ -146,7 +149,6 @@ namespace GUtils.Di.Builder
         public IDiContainerBuilder Bind<T>(BindingBuilderDelegate<T> bindingBuilderDelegate)
         {
             bindingBuilderDelegate.Invoke(Bind<T>());
-
             return this;
         }
 
@@ -183,7 +185,6 @@ namespace GUtils.Di.Builder
         public IDiContainerBuilder Install(InstallDelegate installDelegate)
         {
             Install(new CallbackInstaller(installDelegate.Invoke));
-
             return this;
         }
 
@@ -205,11 +206,22 @@ namespace GUtils.Di.Builder
         public IDiContainerBuilder Install(Action<IDiContainerBuilder> action)
         {
             action?.Invoke(this);
-
             return this;
         }
 
-        public bool TryGetBinding<T>(out IDiBindingActionBuilder<T> diBindingActionBuilder)
+        public IDiContainerBuilder Add(IDiContainer container)
+        {
+            _extraContainers.Add(container);
+            return this;
+        }
+
+        public IDiContainerBuilder Add(IReadOnlyList<IDiContainer> containers)
+        {
+            _extraContainers.AddRange(containers);
+            return this;
+        }
+
+        public bool TryGetBinding<T>(out IDiBindingActionBuilder<T>? diBindingActionBuilder)
         {
             if (_bindings.TryGetValue(typeof(T), out var diBinding))
             {
@@ -217,11 +229,9 @@ namespace GUtils.Di.Builder
                 diBindingActionBuilder = new DiBindingActionBuilder<T>(binding);
                 return true;
             }
-            else
-            {
-                diBindingActionBuilder = null;
-                return false;
-            }
+            
+            diBindingActionBuilder = null;
+            return false;
         }
 
         public IDiContainerBuilder WhenInit(Action action)
@@ -259,24 +269,14 @@ namespace GUtils.Di.Builder
             return this;
         }
         
-        public IDiContainer? Build()
+        public IDiContainer Build()
         {
-            return Build(Array.Empty<IDiContainer>());
-        }
-
-        public IDiContainer? Build(IDiContainer parentContainer)
-        {
-            return Build(new[] { parentContainer });
-        }
-
-        public IDiContainer? Build(IReadOnlyList<IDiContainer> extraContainers)
-        {
-            DiContainer? container = new DiContainer(
+            DiContainer container = new DiContainer(
                 _bindings,
                 _bindingsById,
                 _whenInit,
                 _whenDispose,
-                extraContainers
+                _extraContainers
             );
 
             foreach (Action<IDiContainer?> action in _whenBuild)

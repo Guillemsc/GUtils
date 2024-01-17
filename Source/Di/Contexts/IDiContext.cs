@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GUtils.Di.Container;
 using GUtils.Di.Delegates;
 using GUtils.Di.Installers;
 using GUtils.Disposing.Disposables;
@@ -13,6 +14,7 @@ namespace GUtils.Di.Contexts
         IDiContext<TResult> AddInstaller(IInstaller installer);
         IDiContext<TResult> AddInstaller(InstallDelegate installer);
         IDiContext<TResult> AddInstallers(IReadOnlyList<IInstaller> installers);
+        IDiContext<TResult> AddContainer(IDiContainer container);
 
         IDisposable<TResult> Install();
     }

@@ -6,20 +6,11 @@ namespace GUtils.Persistence.Serialization
 {
     public sealed class NopSerializableData<T> : ISerializableData<T> where T : class
     {
-        public static readonly NopSerializableData<T> Instance = new();
+        public event Action<T>? OnSave;
+        public event Action<T>? OnLoad;
 
-#pragma warning disable 67
-        public event Action<T> OnSave;
-        public event Action<T, bool> OnLoad;
-#pragma warning restore 67
-
-        public T Data { get; set; }
-
-        public NopSerializableData()
-        {
-            Data = Activator.CreateInstance<T>();
-        }
-
+        public T Data { get; }
+        
         public NopSerializableData(T data)
         {
             Data = data;

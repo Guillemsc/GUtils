@@ -50,12 +50,12 @@ namespace GUtils.Persistence.Serialization
         /// <summary>
         /// Event that is triggered when the data is loaded.
         /// </summary>
-        event Action<T, bool> OnLoad;
+        event Action<T> OnLoad;
 
         /// <summary>
         /// The actual data that has been loaded and can be saved.
         /// You are always safe accessing this data, because it's automatically created internally.
         /// </summary>
-        T Data { get; set; }
+        T Data { get; }
     }
 }

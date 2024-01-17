@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using GUtils.Di.Builder;
 using GUtils.Di.Container;
 using GUtils.Di.Delegates;
@@ -14,6 +15,7 @@ namespace GUtils.Di.Contexts
         readonly List<Action<List<IInstaller>, List<IDisposable>>> _loadableSettings = new();
         readonly List<ILoadable<IInstaller>> _loadableInstallers = new();
         readonly List<IInstaller> _installers = new();
+        readonly List<IDiContainer> _containers = new();
 
         bool _hasValidContainer;
         IDiContainer? _container;
@@ -56,6 +58,12 @@ namespace GUtils.Di.Contexts
             return this;
         }
 
+        public IDiContext<TResult> AddContainer(IDiContainer container)
+        {
+            _containers.Add(container);
+            return this;
+        }
+
         public IDisposable<TResult> Install()
         {
             IDiContainerBuilder builder = new DiContainerBuilder();
@@ -75,6 +83,7 @@ namespace GUtils.Di.Contexts
             }
 
             builder.Install(_installers);
+            builder.Add(_containers);
 
             _container = builder.Build();
 
