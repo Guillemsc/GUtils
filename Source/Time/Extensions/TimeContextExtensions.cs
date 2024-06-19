@@ -1,19 +1,20 @@
 using GUtils.Time.TimeContexts;
 using GUtils.Time.Timers;
 
-namespace GUtils.Time.Extensions;
-
-public static class TimeContextExtensions
+namespace GUtils.Time.Extensions
 {
-    public static ITimer NewTimer(this ITimeContext timeContext)
+    public static class TimeContextExtensions
     {
-        return new TimeSourceTimer(timeContext);
-    }
+        public static ITimer NewTimer(this ITimeContext timeContext)
+        {
+            return new TimeSourceTimer(timeContext);
+        }
     
-    public static ITimer NewStartedTimer(this ITimeContext timeContext)
-    {
-        ITimer timer = new TimeSourceTimer(timeContext);
-        timer.Start();
-        return timer;
+        public static ITimer NewStartedTimer(this ITimeContext timeContext)
+        {
+            ITimer timer = new TimeSourceTimer(timeContext);
+            timer.Start();
+            return timer;
+        }
     }
 }

@@ -1,6 +1,7 @@
-namespace GUtils.Pooling.Objects;
-
-public interface ICreatablePooledObject
+namespace GUtils.Pooling.Objects
 {
-    void PooledObjectCreated();
+    public interface ICreatablePooledObject
+    {
+        void PooledObjectCreated();
+    }
 }

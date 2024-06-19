@@ -1,11 +1,12 @@
 using GUtils.Caching.Cache;
 using GUtils.Services.Locators;
 
-namespace GUtils.Services.Cache;
-
-public sealed class ServiceLocatorCachedResult<T> : CachedResult<T>
+namespace GUtils.Services.Cache
 {
-    public ServiceLocatorCachedResult() : base(ServiceLocator.Get<T>)
+    public sealed class ServiceLocatorCachedResult<T> : CachedResult<T>
     {
+        public ServiceLocatorCachedResult() : base(ServiceLocator.Get<T>)
+        {
+        }
     }
 }

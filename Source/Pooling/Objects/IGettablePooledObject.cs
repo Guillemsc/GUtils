@@ -1,6 +1,7 @@
-namespace GUtils.Pooling.Objects;
-
-public interface IGettablePooledObject
+namespace GUtils.Pooling.Objects
 {
-    void PooledObjectGetted();
+    public interface IGettablePooledObject
+    {
+        void PooledObjectGetted();
+    }
 }

@@ -1,6 +1,7 @@
-namespace GUtils.Pooling.Objects;
-
-public interface IReturnablePooledObject
+namespace GUtils.Pooling.Objects
 {
-    void PooledObjectReturned();
+    public interface IReturnablePooledObject
+    {
+        void PooledObjectReturned();
+    }
 }
