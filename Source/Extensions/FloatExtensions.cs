@@ -30,6 +30,12 @@ namespace GUtils.Extensions
         /// </summary>
         /// <example>[2.9f => 2] [5.3f => 5]</example>
         public static int ToIntTruncated(this float value) => (int)value;
+        
+        /// <summary>
+        /// Equivalent to (int)Math.Round(value, 0). Rounds to closest integer value.
+        /// </summary>
+        /// <example>[2.9f => 2] [5.3f => 5]</example>
+        public static int ToIntRounded(this float value) => (int)value.Round(0);
 
         /// <summary>
         /// Equivalent to <see cref="Math.Round(double, int)"/>.
