@@ -16,7 +16,7 @@ namespace GUtils.Disposing.Disposables
             _onDispose = onDispose;
         }
 
-        public Task Dispose(CancellationToken cancellationToken)
+        public Task DisposeAsync(CancellationToken cancellationToken)
         {
             return _onDispose.Invoke(Value, cancellationToken);
         }

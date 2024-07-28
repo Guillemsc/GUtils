@@ -46,7 +46,7 @@ namespace GUtils.Tick.Services
                     break;
                 }
                 
-                case TickType.PhysicsUpdate:
+                case TickType.FixedUpdate:
                 {
                     _physicsTickables.Add(tickable);
                     break;
@@ -77,7 +77,7 @@ namespace GUtils.Tick.Services
                     break;
                 }
                 
-                case TickType.PhysicsUpdate:
+                case TickType.FixedUpdate:
                 {
                     _physicsTickables.Remove(tickable);
                     break;
@@ -111,7 +111,7 @@ namespace GUtils.Tick.Services
                     break;
                 }
                 
-                case TickType.PhysicsUpdate:
+                case TickType.FixedUpdate:
                 {
                     _physicsTickables.Remove(tickable);
                     _physicsTickables.ActuallyRemoveTickables();

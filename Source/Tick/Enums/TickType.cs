@@ -23,6 +23,6 @@ namespace GUtils.Tick.Enums
         /// <summary>
         /// Executed by the physics.
         /// </summary>
-        PhysicsUpdate,
+        FixedUpdate,
     }
 }

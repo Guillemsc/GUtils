@@ -21,7 +21,7 @@ namespace GUtils.StateMachines.Async
             
             if (_currentState != null)
             {
-                await _currentState.Dispose(CancellationToken.None);
+                await _currentState.DisposeAsync(CancellationToken.None);
             }
 
             _currentState = asyncState;

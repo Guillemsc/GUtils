@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GUtils.Di.Container;
@@ -16,7 +18,7 @@ namespace GUtils.Di.Contexts
         IAsyncDiContext<TResult> AddInstallers(IReadOnlyList<IInstaller> installers);
         IAsyncDiContext<TResult> AddInstaller(InstallDelegate installer);
 
-        Task<ITaskDisposable<TResult>> Install();
+        Task<ITaskDisposable<TResult>> InstallAsync();
 
         IDiContainer? GetContainerUnsafe();
     }

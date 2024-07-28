@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -50,7 +52,7 @@ namespace GUtils.Di.Contexts
             return this;
         }
 
-        public async Task<ITaskDisposable<TResult>> Install()
+        public async Task<ITaskDisposable<TResult>> InstallAsync()
         {
             List<IInstaller> allInstallers = new(_installers);
             List<IAsyncDisposable> asyncDisposables = new();

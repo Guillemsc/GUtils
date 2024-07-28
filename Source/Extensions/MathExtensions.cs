@@ -1,5 +1,6 @@
 using System;
-using System.Numerics;
+using UnityEngine;
+using Vector2 = System.Numerics.Vector2;
 
 namespace GUtils.Extensions
 {
@@ -148,6 +149,21 @@ namespace GUtils.Extensions
         public static double CopySign(double magnitude, double sign)
         {
             return sign > 0 ? Math.Abs(magnitude) : -Math.Abs(magnitude);
+        }
+
+        public static bool IsEpsilonEqualsZero(float value)
+        {
+            return Math.Abs(value) <= Mathf.Epsilon;
+        }
+        
+        public static bool AreEpsilonEquals(float value1, float value2)
+        {
+            return Math.Abs(value1 - value2) <= Mathf.Epsilon;
+        }
+        
+        public static bool AreEpsilonEquals(double value1, double value2)
+        {
+            return Math.Abs(value1 - value2) <= Mathf.Epsilon;
         }
     }
 }
