@@ -21,9 +21,9 @@ namespace GUtils.Loading.Contexts
         /// <summary>
         /// Enqueues an asynchronous task-based loading function to be executed.
         /// </summary>
-        /// <param name="loadable">The asynchronous task-based loading function to be executed.</param>
+        /// <param name="loadableAsync">The asynchronous task-based loading function to be executed.</param>
         /// <returns>The current loading context.</returns>
-        ILoadingContext Enqueue(ILoadable loadable);
+        ILoadingContext Enqueue(ILoadableAsync loadableAsync);
 
         /// <summary>
         /// Enqueues a synchronous loading action to be executed.

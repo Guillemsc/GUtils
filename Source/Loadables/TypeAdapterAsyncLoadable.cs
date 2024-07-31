@@ -16,7 +16,7 @@ namespace GUtils.Loadables
 
         public async Task<IAsyncDisposable<TDestiny>> Load(CancellationToken ct)
         {
-            var sourceResult = await _asyncLoadable.Load(ct);
+            IAsyncDisposable<TSource> sourceResult = await _asyncLoadable.Load(ct);
             return new TypeAdapterAsyncDisposable<TSource, TDestiny>(sourceResult);
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using GUtils.Di.Builder;
 using GUtils.Di.Container;

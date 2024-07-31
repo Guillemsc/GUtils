@@ -8,12 +8,12 @@ using GUtils.Starting.Startables;
 namespace GUtils.ApplicationContexts.Contexts
 {
     public abstract class DiApplicationContext<IInteractor> : IApplicationContext
-        where IInteractor : ILoadable, IStartable, ITaskDisposable
+        where IInteractor : ILoadableAsync, IStartable, ITaskDisposable
     {
         IDiContext<IInteractor>? _diContext;
         IDisposable<IInteractor>? _interactor;
 
-        public Task Load(CancellationToken cancellationToken)
+        public Task LoadAsync(CancellationToken cancellationToken)
         {
             _diContext = new DiContext<IInteractor>();
 
@@ -21,7 +21,7 @@ namespace GUtils.ApplicationContexts.Contexts
 
             _interactor = _diContext.Install();
 
-            return _interactor.Value.Load(cancellationToken);
+            return _interactor.Value.LoadAsync(cancellationToken);
         }
 
         public void Start()

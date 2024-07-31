@@ -4,7 +4,7 @@ using GUtils.Starting.Startables;
 
 namespace GUtils.ApplicationContexts.Contexts
 {
-    public interface IApplicationContext : ILoadable, IStartable, ITaskDisposable
+    public interface IApplicationContext : ILoadableAsync, IStartable, ITaskDisposable
     {
 
     }

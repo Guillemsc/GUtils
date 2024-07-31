@@ -12,6 +12,7 @@ namespace GUtils.Di.Contexts
 {
     public interface IAsyncDiContext<TResult>
     {
+        IAsyncDiContext<TResult> AddAsyncLoadable<TLoad>(IAsyncLoadable<TLoad> asyncLoadable);
         IAsyncDiContext<TResult> AddInstallerAsyncLoadable(IAsyncLoadable<IInstaller> asyncLoadable);
         IAsyncDiContext<TResult> AddInstallerLoadable(ILoadable<IInstaller> asyncLoadable);
         IAsyncDiContext<TResult> AddInstaller(IInstaller installer);

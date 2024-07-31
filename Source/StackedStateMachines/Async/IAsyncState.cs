@@ -2,9 +2,9 @@ using GUtils.Disposing.Disposables;
 using GUtils.Loading.Loadables;
 using GUtils.Starting.Startables;
 
-namespace GUtils.StateMachines.Async
+namespace GUtils.StackedStateMachines.Async
 {
-    public interface IAsyncState : ILoadable, IStartable, ITaskDisposable
+    public interface IAsyncState : ILoadableAsync, IStartable, ITaskDisposable
     {
         
     }

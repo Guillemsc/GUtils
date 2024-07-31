@@ -16,21 +16,27 @@ namespace GUtils.Di.Contexts
     public sealed class AsyncDiContext<TResult> : IAsyncDiContext<TResult>
     {
         readonly List<IInstaller> _installers = new();
-        readonly List<IAsyncLoadable<IInstaller>> _asyncLoadables = new();
-        readonly List<ILoadable<IInstaller>> _loadables = new();
+        readonly List<IAsyncLoadable<IInstaller>> _asyncInstallerLoadables = new();
+        readonly List<ILoadable<IInstaller>> _installerLoadables = new();
 
         bool _hasValidContainer;
         IDiContainer? _container;
 
+        public IAsyncDiContext<TResult> AddAsyncLoadable<TLoad>(IAsyncLoadable<TLoad> asyncLoadable)
+        {
+            _asyncInstallerLoadables.Add(new InstallLoadedResultAdapterAsyncLoadable<TLoad>(asyncLoadable));
+            return this;
+        }
+
         public IAsyncDiContext<TResult> AddInstallerAsyncLoadable(IAsyncLoadable<IInstaller> asyncLoadable)
         {
-            _asyncLoadables.Add(asyncLoadable);
+            _asyncInstallerLoadables.Add(asyncLoadable);
             return this;
         }
 
         public IAsyncDiContext<TResult> AddInstallerLoadable(ILoadable<IInstaller> asyncLoadable)
         {
-            _loadables.Add(asyncLoadable);
+            _installerLoadables.Add(asyncLoadable);
             return this;
         }
 
@@ -57,15 +63,15 @@ namespace GUtils.Di.Contexts
             List<IInstaller> allInstallers = new(_installers);
             List<IAsyncDisposable> asyncDisposables = new();
             List<IDisposable> syncDisposables = new();
-
-            foreach (var asyncLoadable in _asyncLoadables)
+            
+            foreach (var asyncLoadable in _asyncInstallerLoadables)
             {
                 IAsyncDisposable<IInstaller> asyncDisposable = await asyncLoadable.Load(CancellationToken.None);
                 asyncDisposables.Add(asyncDisposable);
                 allInstallers.Add(asyncDisposable.Value);
             }
 
-            foreach (var loadable in _loadables)
+            foreach (var loadable in _installerLoadables)
             {
                 IDisposable<IInstaller> installer = loadable.Load();
                 syncDisposables.Add(installer);

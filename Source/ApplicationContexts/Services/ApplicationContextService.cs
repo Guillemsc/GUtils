@@ -124,7 +124,7 @@ namespace GUtils.ApplicationContexts.Services
 
                 state!.Loaded = true;
 
-                return applicationContext.Load(cancellationToken);
+                return applicationContext.LoadAsync(cancellationToken);
             }
 
             return _taskSequencer.PlayAndAwait(Run);
