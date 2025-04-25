@@ -35,7 +35,7 @@ namespace GUtils.Tasks.Trackers
             _hasRunAny = true;
 
             var task = func.Invoke(_cancellationTokenSource.Token);
-            task.RunAsync(e =>
+            task.FireAndForget(e =>
             {
                 if (_onException == null)
                 {

@@ -8,7 +8,7 @@ namespace GUtils.Persistence.Extensions
     {
         public static void SaveAsync(this IPersistenceData persistenceData)
         {
-            persistenceData.Save(CancellationToken.None).RunAsync();
+            persistenceData.Save(CancellationToken.None).FireAndForget();
         }
     }
 }

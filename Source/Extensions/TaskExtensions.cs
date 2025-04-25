@@ -101,7 +101,7 @@ namespace GUtils.Extensions
         /// Any exceptions thrown by the task are automatically logged to the Unity console.
         /// </summary>
         /// <param name="task">The task to run.</param>
-        public static async void RunAsync(this Task task)
+        public static async void FireAndForget(this Task task)
         {
             await task;
         }
@@ -112,7 +112,7 @@ namespace GUtils.Extensions
         /// </summary>
         /// <param name="task">The task to run asynchronously.</param>
         /// <param name="onException">Action to handle any exception thrown by the task.</param>
-        public static async void RunAsync(this Task task, Action<Exception> onException)
+        public static async void FireAndForget(this Task task, Action<Exception> onException)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace GUtils.Extensions
         /// </summary>
         /// <param name="task">The task to run asynchronously.</param>
         /// <param name="onComplete">Action called when the task has finished running.</param>
-        public static async void RunAsync(this Task task, Action onComplete)
+        public static async void FireAndForget(this Task task, Action onComplete)
         {
             await task;
 
@@ -143,7 +143,7 @@ namespace GUtils.Extensions
         /// </summary>
         /// <param name="task">The task to run asynchronously.</param>
         /// <param name="onComplete">Action called when the task has finished running.</param>
-        public static async void RunAsync<T>(this Task<T> task, Action<T> onComplete)
+        public static async void FireAndForget<T>(this Task<T> task, Action<T> onComplete)
         {
             T result = await task;
 

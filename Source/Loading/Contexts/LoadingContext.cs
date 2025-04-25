@@ -115,7 +115,7 @@ namespace GUtils.Loading.Contexts
 
         public void ExecuteAsync()
         {
-            Execute(CancellationToken.None).RunAsync();
+            Execute(CancellationToken.None).FireAndForget();
         }
     }
 }

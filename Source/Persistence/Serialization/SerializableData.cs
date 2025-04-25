@@ -172,12 +172,12 @@ namespace GUtils.Persistence.Serialization
 
         public void SaveAsync()
         {
-            Save(CancellationToken.None).RunAsync();
+            Save(CancellationToken.None).FireAndForget();
         }
 
         public void LoadAsync()
         {
-            Load(CancellationToken.None).RunAsync();
+            Load(CancellationToken.None).FireAndForget();
         }
 
         T GetData()

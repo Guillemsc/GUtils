@@ -68,7 +68,7 @@ namespace GUtils.Tasks.Runners
                 return;
             }
 
-            RunInstructionsAsync().RunAsync();
+            RunInstructionsAsync().FireAndForget();
         }
 
         async Task RunInstructionsAsync()
