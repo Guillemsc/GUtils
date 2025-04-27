@@ -10,18 +10,8 @@ namespace GUtils.Enums.Utils
     /// </summary>
     public abstract class EnumInfo<T> where T : Enum
     {
-        static readonly Random _defaultRandom = new();
-        static int _length = -1;
-        static T[] _values;
-
-        [Obsolete("This method is obsolete. Use Values.Length instead", true)]
-        public static int Length => _length == -1 ? _length = Values.Length : _length;
+        static T[]? _values;
+        
         public static T[] Values => _values ??= (T[])Enum.GetValues(typeof(T));
-
-        [Obsolete("This method is obsolete. Use extension methods of an enum.", true)]
-        public static T Random(Random random) => Values[random.Next(0, Length)];
-
-        [Obsolete("This method is obsolete. Use extension methods of an enum.", true)]
-        public static T Random() => Random(_defaultRandom);
     }
 }

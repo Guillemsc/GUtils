@@ -47,7 +47,7 @@ namespace GUtils.Extensions
         /// <summary>
         /// If item can be found inside the list, it returns its index.
         /// </summary>
-        public static bool TryGetItemIndex<T>(this IReadOnlyList<T> list, T item, out int index)
+        public static bool TryGetItemIndex<T>(this IReadOnlyList<T> list, T? item, out int index)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -142,6 +142,18 @@ namespace GUtils.Extensions
                 T item = array[i];
                 action.Invoke(item);
             }
+        }
+
+        public static bool IsOutsideBounds<T>(this IReadOnlyList<T> array, int index)
+        {
+            return index < 0 || index >= array.Count;
+        }
+
+        public static T? GetOrDefault<T>(this IReadOnlyList<T> array, int index)
+        {
+            bool outsideBounds = array.IsOutsideBounds(index);
+            
+            return outsideBounds ? default : array[index];
         }
     }
 }
