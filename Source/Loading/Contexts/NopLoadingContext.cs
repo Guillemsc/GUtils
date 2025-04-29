@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GUtils.Delegates.Animation;
 using GUtils.Loading.Loadables;
 
 namespace GUtils.Loading.Contexts
@@ -9,11 +10,7 @@ namespace GUtils.Loading.Contexts
     {
         public static readonly NopLoadingContext Instance = new();
 
-        NopLoadingContext()
-        {
-
-        }
-
+        NopLoadingContext() { }
         public ILoadingContext Enqueue(Func<CancellationToken, Task> function) => this;
         public ILoadingContext Enqueue(ILoadableAsync loadableAsync) => this;
         public ILoadingContext Enqueue(Action action) => this;
@@ -21,7 +18,7 @@ namespace GUtils.Loading.Contexts
         public ILoadingContext RunBeforeLoadActionsInstantly() => this;
         public ILoadingContext DontRunAfterLoadActions() => this;
 
-        public Task Execute(CancellationToken cancellationToken) => Task.CompletedTask;
-        public void ExecuteAsync() { }
+        public Task ExecuteAsync() => Task.CompletedTask;
+        public void Execute() { }
     }
 }

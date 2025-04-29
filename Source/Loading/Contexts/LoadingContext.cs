@@ -76,13 +76,11 @@ namespace GUtils.Loading.Contexts
             _dontRunAfterLoadActions = true;
             return this;
         }
-
-        public async Task Execute(CancellationToken cancellationToken)
+        
+        public async Task ExecuteAsync()
         {
-            await _taskSequencer.AwaitCompletition(cancellationToken);
+            await _taskSequencer.AwaitCompletition(CancellationToken.None);
             
-            if(cancellationToken.IsCancellationRequested) return;
-
             IsLoading = true;
 
             foreach (TaskAnimationEvent before in _beforeLoad)
@@ -108,14 +106,14 @@ namespace GUtils.Loading.Contexts
                 _taskSequencer.Play(_afterLoadEnqueuedInstructions.Dequeue());
             }
 
-            await _taskSequencer.AwaitCompletition(cancellationToken);
+            await _taskSequencer.AwaitCompletition(CancellationToken.None);
 
             IsLoading = false;
         }
 
-        public void ExecuteAsync()
+        public void Execute()
         {
-            Execute(CancellationToken.None).FireAndForget();
+            ExecuteAsync().FireAndForget();
         }
     }
 }

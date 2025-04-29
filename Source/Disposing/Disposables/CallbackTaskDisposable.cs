@@ -6,19 +6,19 @@ namespace GUtils.Disposing.Disposables
 {
     public sealed class CallbackTaskDisposable<T> : ITaskDisposable<T>
     {
-        readonly Func<T, CancellationToken, Task> _onDispose;
+        readonly Func<T, Task> _onDispose;
 
         public T Value { get; }
 
-        public CallbackTaskDisposable(T value, Func<T, CancellationToken, Task> onDispose)
+        public CallbackTaskDisposable(T value, Func<T, Task> onDispose)
         {
             Value = value;
             _onDispose = onDispose;
         }
 
-        public Task DisposeAsync(CancellationToken cancellationToken)
+        public Task DisposeAsync()
         {
-            return _onDispose.Invoke(Value, cancellationToken);
+            return _onDispose.Invoke(Value);
         }
     }
 }

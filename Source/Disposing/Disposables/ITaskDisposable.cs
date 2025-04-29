@@ -9,7 +9,7 @@ namespace GUtils.Disposing.Disposables
     /// </summary>
     public interface ITaskDisposable
     {
-        Task DisposeAsync(CancellationToken cancellationToken);
+        Task DisposeAsync();
     }
 
     /// <summary>

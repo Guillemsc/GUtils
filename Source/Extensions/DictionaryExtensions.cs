@@ -5,28 +5,6 @@ namespace GUtils.Extensions
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// Tries to get the value corresponding to the key.
-        /// If it cannot be found, it retuns the default value for the type;
-        /// </summary>
-        public static TValue? GetValueOrDefault<TKey, TValue>(
-            this IReadOnlyDictionary<TKey, TValue?> dictionary,
-            TKey key
-            )
-        {
-            bool valueFound = dictionary.TryGetValue(
-                key,
-                out TValue? value
-            );
-
-            if (!valueFound)
-            {
-                value = default;
-            }
-
-            return value;
-        }
-
-        /// <summary>
         /// Adds the elements of the specified collection to the Dictionary.
         /// Similar to List <see cref="List{T}.AddRange"/>.
         /// </summary>

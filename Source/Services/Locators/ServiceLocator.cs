@@ -20,6 +20,11 @@ namespace GUtils.Services.Locators
         {
             Type type = typeof(T);
 
+            if (service == null)
+            {
+                throw new ArgumentNullException(nameof(service));
+            }
+
             Register(type, service);
         }
 

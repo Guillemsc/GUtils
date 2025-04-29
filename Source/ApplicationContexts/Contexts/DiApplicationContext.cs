@@ -29,9 +29,9 @@ namespace GUtils.ApplicationContexts.Contexts
             _interactor!.Value.Start();
         }
 
-        public async Task DisposeAsync(CancellationToken cancellationToken)
+        public async Task DisposeAsync()
         {
-            await _interactor!.Value.DisposeAsync(cancellationToken);
+            await _interactor!.Value.DisposeAsync();
 
             _interactor!.Dispose();
         }

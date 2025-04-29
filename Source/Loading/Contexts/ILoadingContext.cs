@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GUtils.Delegates.Animation;
 using GUtils.Loading.Loadables;
 using GUtils.Loading.Services;
 
@@ -56,13 +57,12 @@ namespace GUtils.Loading.Contexts
         /// <summary>
         /// Executes the loading operations asynchronously.
         /// </summary>
-        /// <param name="cancellationToken">The cancellation token to cancel the loading operations.</param>
         /// <returns>A task representing the execution of the loading operations.</returns>
-        Task Execute(CancellationToken cancellationToken);
+        Task ExecuteAsync();
 
         /// <summary>
         /// Executes the loading operations asynchronously.
         /// </summary>
-        void ExecuteAsync();
+        void Execute();
     }
 }

@@ -80,7 +80,7 @@ namespace GUtils.Di.Contexts
 
             _container = DiContainerBuilderExtensions.BuildFromInstallers(allInstallers);
 
-            async Task Dispose(TResult result, CancellationToken cancellationToken)
+            async Task Dispose(TResult result)
             {
                 _hasValidContainer = false;
 

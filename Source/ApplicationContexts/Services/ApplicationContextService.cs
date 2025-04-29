@@ -171,7 +171,7 @@ namespace GUtils.ApplicationContexts.Services
 
                 state!.Loaded = false;
 
-                return applicationContext.DisposeAsync(cancellationToken);
+                return applicationContext.DisposeAsync();
             }
 
             return _taskSequencer.PlayAndAwait(Run);
