@@ -212,11 +212,11 @@ namespace GUtils.Extensions
         // /// <param name="denominator">The denominator <see cref="Vector3"/> object.</param>
         // /// <returns>A new <see cref="Vector3"/> object with each component being the result of dividing the
         // /// corresponding component of the numerator by the denominator.</returns>
-        // public static Vector3 Divide(this Vector3 numerator, Vector3 denominator)
+        // public static Vector3 SafeDivide(this Vector3 numerator, Vector3 denominator)
         //     => new(
-        //         MathExtensions.Divide(numerator.x, denominator.x),
-        //         MathExtensions.Divide(numerator.y, denominator.y),
-        //         MathExtensions.Divide(numerator.z, denominator.z)
+        //         MathExtensions.SafeDivide(numerator.x, denominator.x),
+        //         MathExtensions.SafeDivide(numerator.y, denominator.y),
+        //         MathExtensions.SafeDivide(numerator.z, denominator.z)
         //     );
 
         /// <summary>

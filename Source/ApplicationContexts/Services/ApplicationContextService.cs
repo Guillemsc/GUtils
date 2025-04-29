@@ -106,7 +106,7 @@ namespace GUtils.ApplicationContexts.Services
 
         Task LoadApplicationContext(IApplicationContext applicationContext)
         {
-            Task Run(CancellationToken cancellationToken)
+            Task Run()
             {
                 Optional<ApplicationContextState> optionalState = GetStateForContext(applicationContext);
 
@@ -124,10 +124,10 @@ namespace GUtils.ApplicationContexts.Services
 
                 state!.Loaded = true;
 
-                return applicationContext.LoadAsync(cancellationToken);
+                return applicationContext.LoadAsync();
             }
 
-            return _taskSequencer.PlayAndAwait(Run);
+            return _taskSequencer.PlayAndAwait(ct => Run());
         }
 
         void StartApplicationContext(IApplicationContext applicationContext)

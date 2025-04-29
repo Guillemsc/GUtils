@@ -13,7 +13,7 @@ namespace GUtils.ApplicationContexts.Contexts
         IDiContext<IInteractor>? _diContext;
         IDisposable<IInteractor>? _interactor;
 
-        public Task LoadAsync(CancellationToken cancellationToken)
+        public Task LoadAsync()
         {
             _diContext = new DiContext<IInteractor>();
 
@@ -21,7 +21,7 @@ namespace GUtils.ApplicationContexts.Contexts
 
             _interactor = _diContext.Install();
 
-            return _interactor.Value.LoadAsync(cancellationToken);
+            return _interactor.Value.LoadAsync();
         }
 
         public void Start()

@@ -23,7 +23,7 @@ namespace GUtils.Extensions
             current = Math.Max(0, current);
             current = Math.Min(current, max);
 
-            return Divide(current, max);
+            return SafeDivide(current, max);
         }
 
         /// <summary>
@@ -47,13 +47,13 @@ namespace GUtils.Extensions
             float displacedMax = max - min;
             float displacedCurrent = current - min;
 
-            return Divide(displacedCurrent, displacedMax);
+            return SafeDivide(displacedCurrent, displacedMax);
         }
 
         /// <summary>
         /// Divides two values, avoiding undefined behaviour from divide by zero.
         /// </summary>
-        public static float Divide(float a, float b)
+        public static float SafeDivide(float a, float b)
         {
             if (b == 0f)
             {
@@ -66,7 +66,7 @@ namespace GUtils.Extensions
         /// <summary>
         /// Divides two values, avoiding undefined behaviour from divide by zero.
         /// </summary>
-        public static float Divide(int a, int b)
+        public static float SafeDivide(int a, int b)
         {
             if (b == 0)
             {

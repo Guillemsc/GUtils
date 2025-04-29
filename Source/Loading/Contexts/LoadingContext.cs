@@ -45,7 +45,7 @@ namespace GUtils.Loading.Contexts
 
         public ILoadingContext Enqueue(ILoadableAsync loadableAsync)
         {
-            _enqueuedInstructions.Enqueue(new TaskInstruction(loadableAsync.LoadAsync));
+            _enqueuedInstructions.Enqueue(new TaskInstruction(ct => loadableAsync.LoadAsync()));
             return this;
         }
 

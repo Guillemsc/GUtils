@@ -19,7 +19,7 @@ namespace GUtils.StackedStateMachines.Async
 
             _changingState = true;
             
-            await asyncState.LoadAsync(CancellationToken.None);
+            await asyncState.LoadAsync();
 
             if (autoStart)
             {

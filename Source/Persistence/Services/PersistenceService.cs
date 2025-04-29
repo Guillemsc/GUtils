@@ -32,7 +32,7 @@ namespace GUtils.Persistence.Services
             {
                 if(cancellationToken.IsCancellationRequested) break;
 
-                await serializableData.LoadAsync(cancellationToken);
+                await serializableData.LoadAsync();
             }
         }
 

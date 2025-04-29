@@ -9,7 +9,7 @@ namespace GUtils.StackedStateMachines.Async
         
         NopAsyncState() {}
 
-        public Task LoadAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+        public Task LoadAsync() => Task.CompletedTask;
         public void Start() {}
         public Task DisposeAsync() => Task.CompletedTask;
     }

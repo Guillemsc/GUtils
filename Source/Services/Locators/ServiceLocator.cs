@@ -112,12 +112,19 @@ namespace GUtils.Services.Locators
             return (T)value;
         }
 
+        public static T? GetOrDefault<T>()
+        {
+            bool couldGet = TryGet(out T value);
+            
+            return couldGet ? value : default;
+        }
+
         /// <summary>
         /// Tries to get a registered services.
         /// </summary>
         public static bool TryGet<T>(out T item)
         {
-            return Instance._services.TryGetValue<T>(out item);
+            return Instance._services.TryGetValue(out item);
         }
 
         /// <summary>
