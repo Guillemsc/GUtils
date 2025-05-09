@@ -22,7 +22,7 @@ namespace GUtils.Services.Locators
 
             if (service == null)
             {
-                throw new ArgumentNullException(nameof(service));
+                throw new ArgumentNullException($"{nameof(service)}: {typeof(T).Name}");
             }
 
             Register(type, service);

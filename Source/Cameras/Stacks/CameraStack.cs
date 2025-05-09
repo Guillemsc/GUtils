@@ -5,6 +5,8 @@ namespace GUtils.Source.Cameras.Stacks
 {
     public sealed class CameraStack
     {
+        public Camera? Current;
+        
         readonly List<Camera> _cameras = new();
         
         public void Push(Camera camera)
@@ -17,10 +19,14 @@ namespace GUtils.Source.Cameras.Stacks
             
             camera.gameObject.SetActive(true);
             _cameras.Add(camera);
+
+            Current = camera;
         }
 
         public void Pop()
         {
+            Current = null;
+            
             if (_cameras.Count > 0)
             {
                 Camera current = _cameras[^1];
@@ -30,8 +36,8 @@ namespace GUtils.Source.Cameras.Stacks
             
             if (_cameras.Count > 0)
             {
-                Camera current = _cameras[^1];
-                current.gameObject.SetActive(true);
+                Current = _cameras[^1];
+                Current.gameObject.SetActive(true);
             }
         }
     }
